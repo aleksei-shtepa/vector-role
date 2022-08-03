@@ -9,7 +9,7 @@
 - name: Get Vector distributive
   become_user: vector
   ansible.builtin.get_url:
-    url: "https://packages.timber.io/vector/{{ vecrot_version }}/{{ archive_file }}"
+    url: "https://packages.timber.io/vector/{{ vector_version }}/{{ archive_file }}"
     dest: "/tmp/{{ archive_file }}"
     mode: '0644'
 - name: Unarchive Vector distib
@@ -57,11 +57,7 @@
     group: vector
     owner: vector
     mode: '0644'
-  # notify: Start vector service
-# - name: Started Vector daemon
-#   ansible.builtin.meta: flush_handlers
-- name: Started Vector daemon
-  ansible.builtin.systemd:
-    name: vector
-    state: started
-    enabled: true
+  notify:
+    - Start vector service
+    # - Start vector programm
+
